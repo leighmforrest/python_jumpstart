@@ -1,5 +1,9 @@
 import bs4
 import requests
+import collections
+
+
+WeatherReport = collections.namedtuple('WeatherReport', 'location, temp, condition')
 
 
 def main():
@@ -13,7 +17,7 @@ def main():
     # parse the html
     forecast = get_weather_from_html(html)
     # display for the forecast
-    print(forecast[0], '\n' + forecast[1], forecast[2])
+    print(f"The temperature is {forecast.temp} in {forecast.location}, and the condition is {forecast.condition}.")
 
 
 def print_header():
@@ -40,7 +44,8 @@ def get_weather_from_html(html):
     temperature = cleanup_text(temperature) + '\u00B0F'
     condition = cleanup_text(condition)
 
-    return location, temperature, condition
+    report = WeatherReport(location=location, temp=temperature, condition=condition)
+    return report
 
 
 def cleanup_text(text):
