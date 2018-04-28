@@ -28,8 +28,8 @@ def load_file(filename):
             p = Purchase.create_from_dict(row)
             purchases.append(p)
 
-    for purchase in purchases:
-        print(purchase.__dict__)
+    # for purchase in purchases:
+    #     print(purchase.__dict__)
     return purchases
 
 # def load_file(filename):
@@ -52,32 +52,49 @@ def query_data(data):
     data.sort(key=lambda p: p.price)
 
     high_purchase = data[-1]
-    print(f'The most expensive house is ${high_purchase.price:,} with {high_purchase.beds} beds and '
+    print(f'The most expensive house is ${high_purchase.price:7,.2f} with {high_purchase.beds} beds and '
           + f'{high_purchase.baths} baths.')
 
     low_purchase = data[0]
     print(
-        f'The most expensive house is ${low_purchase.price:,} with {low_purchase.beds} beds '
+        f'The most expensive house is ${low_purchase.price:7,.2f} with {low_purchase.beds} beds '
          + f'and {low_purchase.baths} baths.')
 
-    three_beds = [
+    three_beds = (
         p.price for p in data
         if p.beds == 3
-    ]
+    )
 
-    two_beds = [
+    two_beds = (
         p.price for p in data
         if p.beds == 2
-    ]
+    )
+
+    high_beds = (
+        p.price for p in data
+        if p.beds > 3
+    )
+
+    all = (
+        p.price for p in data
+    )
+
 
     # average price for three-bedrooms
     mean = statistics.mean(three_beds)
-    print(f'The average house price of a three-bedroom house is ${mean}')
+    print(f'The average house price of a three-bedroom house is ${mean:7,.2f}')
 
     # average price for two-bedrooms
     mean = statistics.mean(two_beds)
-    print(f'The average house price of a two-bedroom house is ${mean}')
+    print(f'The average house price of a two-bedroom house is ${mean:7,.2f}')
 
+    # average price for three-bedrooms
+    mean = statistics.mean(high_beds)
+    print(f'The average house price of a house more than 3 bedrooms is ${mean:7,.2f}')
+
+    # median price for all houses
+    median = statistics.median(all)
+    print(f'The median house price for all type houses is ${median:7,.2f}')
 
 def main():
     print_header()
