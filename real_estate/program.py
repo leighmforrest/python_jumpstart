@@ -88,7 +88,7 @@ def query_data(data):
     mean = statistics.mean(two_beds)
     print(f'The average house price of a two-bedroom house is ${mean:7,.2f}')
 
-    # average price for three-bedrooms
+    # average price for more than three bedrooms
     mean = statistics.mean(high_beds)
     print(f'The average house price of a house more than 3 bedrooms is ${mean:7,.2f}')
 
